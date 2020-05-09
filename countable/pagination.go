@@ -80,7 +80,7 @@ func (p *CountablePagination) Range() []int64 {
 
 func NewPaginationFromCount(total_count int64) (pagination.Pagination, error) {
 
-	opts, err := DefaultCountablePaginatedOptions()
+	opts, err := NewCountablePaginationOptions()
 
 	if err != nil {
 		return nil, err
@@ -89,11 +89,11 @@ func NewPaginationFromCount(total_count int64) (pagination.Pagination, error) {
 	return NewPaginationFromCountWithOptions(opts, total_count)
 }
 
-func NewPaginationFromCountWithOptions(opts pagination.PaginatedOptions, total_count int64) (pagination.Pagination, error) {
+func NewPaginationFromCountWithOptions(opts *pagination.PaginationOptions, total_count int64) (pagination.Pagination, error) {
 
-	page := int64(math.Max(1.0, float64(opts.Page())))
-	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
-	spill := int64(math.Max(1.0, float64(opts.Spill())))
+	page := int64(math.Max(1.0, float64(opts.Page)))
+	per_page := int64(math.Max(1.0, float64(opts.PerPage)))
+	spill := int64(math.Max(1.0, float64(opts.Spill)))
 
 	if spill >= per_page {
 		spill = per_page - 1

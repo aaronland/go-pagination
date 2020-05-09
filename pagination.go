@@ -4,19 +4,12 @@ import (
 	"net/url"
 )
 
-type PaginatedOptions interface {
-	PerPage() int64
-	Page() int64
-	Spill() int64
-	Column() string
+type PaginationOptions struct {
+	PerPage   int64
+	Page      int64
+	Spill     int64
+	Countable string
 }
-
-type PaginatedResponse interface {
-	Rows() []interface{}
-	Pagination() Pagination
-}
-
-type PaginatedResponseCallback func(PaginatedResponse) error
 
 type Pagination interface {
 	Total() int64
