@@ -93,14 +93,9 @@ func NewPaginationFromCountWithOptions(opts *pagination.PaginationOptions, total
 
 	page := int64(math.Max(1.0, float64(opts.Page)))
 	per_page := int64(math.Max(1.0, float64(opts.PerPage)))
-	spill := int64(math.Max(1.0, float64(opts.Spill)))
-
-	if spill >= per_page {
-		spill = per_page - 1
-	}
-
-	pages := int64(math.Ceil(float64(total_count) / float64(per_page)))
-
+	
+	pages := pagination.PagesForCount(opts, total_count)
+	
 	next_page := int64(0)
 	previous_page := int64(0)
 
