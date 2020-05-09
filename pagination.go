@@ -5,10 +5,10 @@ import (
 )
 
 type PaginatedOptions interface {
-	PerPage(...int) int
-	Page(...int) int
-	Spill(...int) int
-	Column(...string) string
+	PerPage() int64
+	Page() int64
+	Spill() int64
+	Column() string
 }
 
 type PaginatedResponse interface {
@@ -19,13 +19,13 @@ type PaginatedResponse interface {
 type PaginatedResponseCallback func(PaginatedResponse) error
 
 type Pagination interface {
-	Total() int
-	PerPage() int
-	Page() int
-	Pages() int
-	NextPage() int
-	PreviousPage() int
+	Total() int64
+	PerPage() int64
+	Page() int64
+	Pages() int64
+	NextPage() int64
+	PreviousPage() int64
 	NextURL(u *url.URL) string
 	PreviousURL(u *url.URL) string
-	Range() []int
+	Range() []int64
 }
