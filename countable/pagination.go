@@ -89,13 +89,13 @@ func NewPaginationFromCount(total_count int64) (pagination.Pagination, error) {
 	return NewPaginationFromCountWithOptions(opts, total_count)
 }
 
-func NewPaginationFromCountWithOptions(opts *pagination.PaginationOptions, total_count int64) (pagination.Pagination, error) {
+func NewPaginationFromCountWithOptions(opts pagination.PaginationOptions, total_count int64) (pagination.Pagination, error) {
 
-	page := int64(math.Max(1.0, float64(opts.Page)))
-	per_page := int64(math.Max(1.0, float64(opts.PerPage)))
-	
+	page := int64(math.Max(1.0, float64(opts.Page())))
+	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
+
 	pages := pagination.PagesForCount(opts, total_count)
-	
+
 	next_page := int64(0)
 	previous_page := int64(0)
 

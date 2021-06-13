@@ -1,15 +1,15 @@
 package pagination
 
 import (
-	"net/url"
 	"math"
+	"net/url"
 )
 
-type PaginationOptions struct {
-	PerPage   int64
-	Page      int64
-	Spill     int64
-	Countable string
+type PaginationOptions interface {
+	PerPage(...int64) int64
+	Page(...int64) int64
+	Spill(...int64) int64
+	Column(...string) string
 }
 
 type Pagination interface {
@@ -24,10 +24,10 @@ type Pagination interface {
 	Range() []int64
 }
 
-func PagesForCount(opts *PaginationOptions, total_count int64) int64 {
+func PagesForCount(opts PaginationOptions, total_count int64) int64 {
 
-	per_page := int64(math.Max(1.0, float64(opts.PerPage)))
-	spill := int64(math.Max(1.0, float64(opts.Spill)))
+	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
+	spill := int64(math.Max(1.0, float64(opts.Spill())))
 
 	if spill >= per_page {
 		spill = per_page - 1
