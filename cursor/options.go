@@ -9,13 +9,13 @@ const PAGE int64 = 1
 const SPILL int64 = 2
 
 type CursorOptions struct {
-	pagination.PaginationOptions
+	pagination.Options
 	perpage int64
 	cursor  string
 	column  string
 }
 
-func NewCursorOptions() (pagination.PaginationOptions, error) {
+func NewCursorOptions() (pagination.Options, error) {
 
 	opts := &CursorOptions{
 		perpage: PER_PAGE,

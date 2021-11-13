@@ -17,7 +17,7 @@ type CountableOptions struct {
 	column  string
 }
 
-func NewCountableOptions() (pagination.PaginationOptions, error) {
+func NewCountableOptions() (pagination.Options, error) {
 
 	opts := &CountableOptions{
 		perpage: PER_PAGE,

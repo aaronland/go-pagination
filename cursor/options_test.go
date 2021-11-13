@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestCursorPaginationOptions(t *testing.T){
+func TestCursorPaginationOptions(t *testing.T) {
 
 	opts, err := NewCursorPaginationOptions()
 

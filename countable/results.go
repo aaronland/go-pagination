@@ -3,19 +3,18 @@ package countable
 import (
 	"fmt"
 	"github.com/aaronland/go-pagination"
+	"github.com/jtacoma/uritemplates"
 	"math"
-	"net/url"
-	"github.com/jtacoma/uritemplates"	
 )
 
 type CountableResults struct {
 	pagination.Results `json:",omitempty"`
-	TotalCount            int64   `json:"total"`
-	PerPageCount          int64   `json:"per_page"`
-	PageCount             int64   `json:"page"`
-	PagesCount            int64   `json:"pages"`
-	NextPageURI           int64   `json:"next_page"`
-	PreviousPageURI       int64   `json:"previous_page"`
+	TotalCount         int64 `json:"total"`
+	PerPageCount       int64 `json:"per_page"`
+	PageCount          int64 `json:"page"`
+	PagesCount         int64 `json:"pages"`
+	NextPageURI        int64 `json:"next_page"`
+	PreviousPageURI    int64 `json:"previous_page"`
 }
 
 func (p *CountableResults) Method() pagination.Method {
@@ -54,7 +53,7 @@ func (p *CountableResults) PreviousCursor() string {
 	return ""
 }
 
-func (p *CountableResults) NextURL(t *uritemplates.UriTemplates) (string, error) {
+func (p *CountableResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
 
 	next := p.NextPage()
 
@@ -64,7 +63,7 @@ func (p *CountableResults) NextURL(t *uritemplates.UriTemplates) (string, error)
 	values := map[string]interface{}{
 		"next": next,
 	}
-	
+
 	uri, err := t.Expand(values)
 
 	if err != nil {
@@ -74,7 +73,7 @@ func (p *CountableResults) NextURL(t *uritemplates.UriTemplates) (string, error)
 	return uri, nil
 }
 
-func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplates) string {
+func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplate) (string, error) {
 
 	previous := p.PreviousPage()
 
@@ -85,7 +84,7 @@ func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplates) string {
 	values := map[string]interface{}{
 		"previous": previous,
 	}
-	
+
 	uri, err := t.Expand(values)
 
 	if err != nil {
@@ -97,7 +96,7 @@ func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplates) string {
 
 func NewResultsFromCount(total_count int64) (pagination.Results, error) {
 
-	opts, err := NewCountableResultsOptions()
+	opts, err := NewCountableOptions()
 
 	if err != nil {
 		return nil, err
@@ -106,12 +105,12 @@ func NewResultsFromCount(total_count int64) (pagination.Results, error) {
 	return NewResultsFromCountWithOptions(opts, total_count)
 }
 
-func NewResultsFromCountWithOptions(opts pagination.PaginationOptions, total_count int64) (pagination.Results, error) {
+func NewResultsFromCountWithOptions(opts pagination.Options, total_count int64) (pagination.Results, error) {
 
 	page := int64(math.Max(1.0, float64(opts.Page())))
 	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
 
-	pages := pagination.PagesForCount(opts, total_count)
+	pages := PagesForCount(opts, total_count)
 
 	next_page := int64(0)
 	previous_page := int64(0)
@@ -175,7 +174,6 @@ func NewResultsFromCountWithOptions(opts pagination.PaginationOptions, total_cou
 		PagesCount:      pages,
 		NextPageURI:     next_page,
 		PreviousPageURI: previous_page,
-		PagesRange:      pages_range,
 	}
 
 	return pg, nil

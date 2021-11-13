@@ -39,14 +39,14 @@ type Results interface {
 	// The cursor (token) to use to advance to the next set of results in a query response.
 	NextCursor() string
 	// The cursor (token) to use to rewind to the previous set of results in a query response.
-	PreviousCursor() string	
+	PreviousCursor() string
 	// The next page (offset) for a paginated query response.
 	NextPage() int64
-	// The previous page (offset) for a paginated query response.	
+	// The previous page (offset) for a paginated query response.
 	PreviousPage() int64
 	// The URL to the next set of results in a query response
 	NextURL(t *uritemplates.UriTemplate) (string, error)
-	// The URL to the previous set of results in a query response	
+	// The URL to the previous set of results in a query response
 	PreviousURL(*uritemplates.UriTemplate) (string, error)
-	Method() Method	
+	Method() Method
 }

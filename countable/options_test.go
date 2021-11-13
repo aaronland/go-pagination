@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestCountablePaginationOptions(t *testing.T){
+func TestCountablePaginationOptions(t *testing.T) {
 
 	_, err := NewCountablePaginationOptions()
 
