@@ -7,6 +7,7 @@ import (
 	"math"
 )
 
+// type CountableResults implements the pagination.Results interface for page or number-based pagination.
 type CountableResults struct {
 	pagination.Results `json:",omitempty"`
 	TotalCount         int64 `json:"total"`
@@ -53,6 +54,7 @@ func (p *CountableResults) PreviousCursor() string {
 	return ""
 }
 
+// NextURL returns URL to the next set of results in a query response.
 func (p *CountableResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
 
 	next := p.NextPage()
@@ -73,6 +75,7 @@ func (p *CountableResults) NextURL(t *uritemplates.UriTemplate) (string, error) 
 	return uri, nil
 }
 
+// PreviousURL returns URL to the previous set of results in a query response.
 func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplate) (string, error) {
 
 	previous := p.PreviousPage()
@@ -94,6 +97,7 @@ func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplate) (string, err
 	return uri, nil
 }
 
+// NewResultsFromCount will return a new CountableResults instance for total_count using criteria defined in a default CountableOptions instance.
 func NewResultsFromCount(total_count int64) (pagination.Results, error) {
 
 	opts, err := NewCountableOptions()
@@ -105,6 +109,7 @@ func NewResultsFromCount(total_count int64) (pagination.Results, error) {
 	return NewResultsFromCountWithOptions(opts, total_count)
 }
 
+// NewResultsFromCount will return a new CountableResults instance for total_count using criteria defined in opts.
 func NewResultsFromCountWithOptions(opts pagination.Options, total_count int64) (pagination.Results, error) {
 
 	page := int64(math.Max(1.0, float64(opts.Page())))
