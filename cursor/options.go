@@ -8,23 +8,27 @@ const PER_PAGE int64 = 10
 const PAGE int64 = 1
 const SPILL int64 = 2
 
-type CursorPaginationOptions struct {
+type CursorOptions struct {
 	pagination.PaginationOptions
 	perpage int64
 	cursor  string
 	column  string
 }
 
-func NewCursorPaginationOptions() (pagination.PaginationOptions, error) {
+func NewCursorOptions() (pagination.PaginationOptions, error) {
 
-	opts := &CursorPaginationOptions{
+	opts := &CursorOptions{
 		perpage: PER_PAGE,
 	}
 
 	return opts, nil
 }
 
-func (opts *CursorPaginationOptions) PerPage(args ...int64) int64 {
+func (opts *CursorOptions) Method() pagination.Method {
+	return pagination.Cursor
+}
+
+func (opts *CursorOptions) PerPage(args ...int64) int64 {
 
 	if len(args) >= 1 {
 		opts.perpage = args[0]
@@ -33,7 +37,7 @@ func (opts *CursorPaginationOptions) PerPage(args ...int64) int64 {
 	return opts.perpage
 }
 
-func (opts *CursorPaginationOptions) Cursor(args ...string) string {
+func (opts *CursorOptions) Cursor(args ...string) string {
 
 	if len(args) >= 1 {
 		opts.cursor = args[0]
@@ -42,17 +46,17 @@ func (opts *CursorPaginationOptions) Cursor(args ...string) string {
 	return opts.cursor
 }
 
-func (opts *CursorPaginationOptions) Page(args ...int64) int64 {
+func (opts *CursorOptions) Page(args ...int64) int64 {
 
 	return 0
 }
 
-func (opts *CursorPaginationOptions) Spill(args ...int64) int64 {
+func (opts *CursorOptions) Spill(args ...int64) int64 {
 
 	return 0
 }
 
-func (opts *CursorPaginationOptions) Column(args ...string) string {
+func (opts *CursorOptions) Column(args ...string) string {
 
 	if len(args) >= 1 {
 		opts.column = args[0]
