@@ -2,7 +2,7 @@ package cursor
 
 import (
 	"fmt"
-	"net/url"
+	"github.com/jtacoma/uritemplates"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Failed to create cursor, %v", err)
 	}
 
-	if pg.Cursor() != cursor {
+	if pg.NextCursor() != cursor {
 		t.Fatalf("Invalid cursor")
 	}
 
@@ -24,13 +24,17 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Invalid pages")
 	}
 
-	u, err := url.Parse("http://example.com")
+	uri_t, err := uritemplates.Parse("http://example.com?cursor={next}")
 
 	if err != nil {
-		t.Fatalf("Failed to parse URL, %v", err)
+		t.Fatalf("Failed to compile URI template, %v", err)
 	}
 
-	next_url := pg.NextURL(u)
+	next_url, err := pg.NextURL(uri_t)
+
+	if err != nil {
+		t.Fatalf("Failed to derive next URL, %v", err)
+	}
 
 	expected_url := fmt.Sprintf("http://example.com?cursor=%s", cursor)
 
