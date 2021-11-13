@@ -42,6 +42,10 @@ func (p *CountablePagination) PreviousPage() int64 {
 	return p.PreviousPageURI
 }
 
+func (p *CountablePagination) Cursor() string {
+	return ""
+}
+
 func (p *CountablePagination) NextURL(u *url.URL) string {
 
 	next := p.NextPage()

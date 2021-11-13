@@ -10,6 +10,7 @@ type PaginationOptions interface {
 	Page(...int64) int64
 	Spill(...int64) int64
 	Column(...string) string
+	Cursor(...string) string
 }
 
 type Pagination interface {
@@ -17,6 +18,7 @@ type Pagination interface {
 	PerPage() int64
 	Page() int64
 	Pages() int64
+	Cursor() string
 	NextPage() int64
 	PreviousPage() int64
 	NextURL(u *url.URL) string

@@ -47,6 +47,11 @@ func (opts *CountablePaginationOptions) Page(args ...int64) int64 {
 	return opts.page
 }
 
+func (opts *CountablePaginationOptions) Cursor(args ...string) string {
+
+	return ""
+}
+
 func (opts *CountablePaginationOptions) Spill(args ...int64) int64 {
 
 	if len(args) >= 1 {
