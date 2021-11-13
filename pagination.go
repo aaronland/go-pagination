@@ -5,6 +5,7 @@ import (
 	"net/url"
 )
 
+// PaginationOptions provides an interface for criteria used to paginate a query.
 type PaginationOptions interface {
 	PerPage(...int64) int64
 	Page(...int64) int64
@@ -13,13 +14,21 @@ type PaginationOptions interface {
 	Cursor(...string) string
 }
 
+// Pagination provides an interface for pagination information for a query response.
 type Pagination interface {
+	// The total number of results for a query.
 	Total() int64
+	// The number of results per page for a query.
 	PerPage() int64
+	// The current page number (offset) for a paginated query response.
 	Page() int64
+	// The total number of pages for a paginated query response.
 	Pages() int64
+	// The cursor (token) to use to advance to the next set of results in a query response.
 	Cursor() string
+	// The next page (offset) for a paginated query response.
 	NextPage() int64
+	// The previous page (offset) for a paginated query response.	
 	PreviousPage() int64
 	NextURL(u *url.URL) string
 	PreviousURL(u *url.URL) string

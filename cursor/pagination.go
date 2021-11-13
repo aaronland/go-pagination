@@ -1,7 +1,7 @@
 package cursor
 
 import (
-	"fmt"
+	_ "fmt"
 	"github.com/aaronland/go-pagination"
 	"net/url"
 )
@@ -48,34 +48,22 @@ func (p *CursorPagination) PreviousPage() int64 {
 
 func (p *CursorPagination) NextURL(u *url.URL) string {
 
-	next := p.NextPage()
+	cursor := p.Cursor()
 
-	if next == 0 {
+	if cursor == "" {
 		return "#"
 	}
 
 	q := u.Query()
 
-	q.Set("page", fmt.Sprintf("%d", next))
+	q.Set("cursor", cursor)
 	u.RawQuery = q.Encode()
 
 	return u.String()
 }
 
 func (p *CursorPagination) PreviousURL(u *url.URL) string {
-
-	previous := p.PreviousPage()
-
-	if previous == 0 {
-		return "#"
-	}
-
-	q := u.Query()
-
-	q.Set("page", fmt.Sprintf("%d", previous))
-	u.RawQuery = q.Encode()
-
-	return u.String()
+	return "#"
 }
 
 func (p *CursorPagination) Range() []int64 {
