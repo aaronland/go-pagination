@@ -8,15 +8,16 @@ import (
 
 func TestCursorPagination(t *testing.T) {
 
-	cursor := "next"
+	previous_cursor := ""
+	next_cursor := "next"
 
-	pg, err := NewPaginationFromCursor(cursor)
+	pg, err := NewPaginationFromCursors(previous_cursor, next_cursor)
 
 	if err != nil {
 		t.Fatalf("Failed to create cursor, %v", err)
 	}
 
-	if pg.NextCursor() != cursor {
+	if pg.NextCursor() != next_cursor {
 		t.Fatalf("Invalid cursor")
 	}
 
@@ -24,19 +25,19 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Invalid pages")
 	}
 
-	uri_t, err := uritemplates.Parse("http://example.com?cursor={next}")
+	next_t, err := uritemplates.Parse("http://example.com?cursor={next}")
 
 	if err != nil {
 		t.Fatalf("Failed to compile URI template, %v", err)
 	}
 
-	next_url, err := pg.NextURL(uri_t)
+	next_url, err := pg.NextURL(next_t)
 
 	if err != nil {
 		t.Fatalf("Failed to derive next URL, %v", err)
 	}
 
-	expected_url := fmt.Sprintf("http://example.com?cursor=%s", cursor)
+	expected_url := fmt.Sprintf("http://example.com?cursor=%s", next_cursor)
 
 	if next_url != expected_url {
 		t.Fatalf("Unexpected URL")

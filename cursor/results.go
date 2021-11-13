@@ -6,6 +6,7 @@ import (
 	"github.com/jtacoma/uritemplates"
 )
 
+// type CursorResults implements the pagination.Results interface for cursor or token-based pagination.
 type CursorResults struct {
 	pagination.Results `json:",omitempty"`
 	TotalCount         int64   `json:"total"`
@@ -97,10 +98,11 @@ func (p *CursorResults) PreviousURL(t *uritemplates.UriTemplate) (string, error)
 	return uri, nil
 }
 
-func NewPaginationFromCursor(cursor string) (pagination.Results, error) {
+func NewPaginationFromCursors(previous string, next string) (pagination.Results, error) {
 
 	pg := new(CursorResults)
-	pg.CursorNext = cursor
+	pg.CursorPrevious = previous
+	pg.CursorNext = next
 
 	return pg, nil
 }
