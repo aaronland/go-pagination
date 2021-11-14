@@ -9,15 +9,14 @@ import (
 // type CursorResults implements the pagination.Results interface for cursor or token-based pagination.
 type CursorResults struct {
 	pagination.Results `json:",omitempty"`
-	TotalCount         int64   `json:"total"`
-	PerPageCount       int64   `json:"per_page"`
-	PageCount          int64   `json:"page"`
-	PagesCount         int64   `json:"pages"`
-	NextPageURI        int64   `json:"next_page"`
-	PreviousPageURI    int64   `json:"previous_page"`
-	PagesRange         []int64 `json:"pages_range"`
-	CursorNext         string  `json:"next_cursor"`
-	CursorPrevious     string  `json:"previous_cursor"`
+	TotalCount         int64  `json:"total"`
+	PerPageCount       int64  `json:"per_page"`
+	PageCount          int64  `json:"page"`
+	PagesCount         int64  `json:"pages"`
+	NextPageURI        int64  `json:"next_page"`
+	PreviousPageURI    int64  `json:"previous_page"`
+	CursorNext         string `json:"next_cursor"`
+	CursorPrevious     string `json:"previous_cursor"`
 }
 
 func (p *CursorResults) Method() pagination.Method {
@@ -25,14 +24,14 @@ func (p *CursorResults) Method() pagination.Method {
 }
 
 func (p *CursorResults) Total() int64 {
-	return -1
+	return p.Total
 }
 
-func (p *CursorResults) NextCursor() string {
+func (p *CursorResults) Next() interface{} {
 	return p.CursorNext
 }
 
-func (p *CursorResults) PreviousCursor() string {
+func (p *CursorResults) Previous() interface{} {
 	return p.CursorPrevious
 }
 
@@ -48,17 +47,9 @@ func (p *CursorResults) Pages() int64 {
 	return -1
 }
 
-func (p *CursorResults) NextPage() int64 {
-	return -1
-}
-
-func (p *CursorResults) PreviousPage() int64 {
-	return -1
-}
-
 func (p *CursorResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
 
-	cursor := p.NextCursor()
+	cursor := NextCursor(p)
 
 	if cursor == "" {
 		return "#", nil
@@ -79,7 +70,7 @@ func (p *CursorResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
 
 func (p *CursorResults) PreviousURL(t *uritemplates.UriTemplate) (string, error) {
 
-	cursor := p.PreviousCursor()
+	cursor := PreviousCursor(p)
 
 	if cursor == "" {
 		return "#", nil
@@ -103,6 +94,7 @@ func NewPaginationFromCursors(previous string, next string) (pagination.Results,
 	pg := new(CursorResults)
 	pg.CursorPrevious = previous
 	pg.CursorNext = next
+	pg.Total = -1
 
 	return pg, nil
 }

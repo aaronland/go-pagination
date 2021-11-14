@@ -6,6 +6,24 @@ import (
 	"math"
 )
 
+func NextPage(r pagination.Results) int64 {
+
+	if r.Method() != pagination.Countable {
+		return 0
+	}
+
+	return r.Next().(int64)
+}
+
+func PreviousPage(r pagination.Results) int64 {
+
+	if r.Method() != pagination.Countable {
+		return 0
+	}
+
+	return r.Previous().(int64)
+}
+
 // PagesForCount returns the number of pages that total_count will span using criteria defined in opts.
 func PagesForCount(opts pagination.Options, total_count int64) int64 {
 

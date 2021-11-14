@@ -17,7 +17,7 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Failed to create cursor, %v", err)
 	}
 
-	if pg.NextCursor() != next_cursor {
+	if NextCursor(pg) != next_cursor {
 		t.Fatalf("Invalid cursor")
 	}
 

@@ -38,26 +38,18 @@ func (p *CountableResults) Pages() int64 {
 	return p.PagesCount
 }
 
-func (p *CountableResults) NextPage() int64 {
+func (p *CountableResults) Next() interface{} {
 	return p.NextPageURI
 }
 
-func (p *CountableResults) PreviousPage() int64 {
+func (p *CountableResults) Previous() interface{} {
 	return p.PreviousPageURI
-}
-
-func (p *CountableResults) NextCursor() string {
-	return ""
-}
-
-func (p *CountableResults) PreviousCursor() string {
-	return ""
 }
 
 // NextURL returns URL to the next set of results in a query response.
 func (p *CountableResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
 
-	next := p.NextPage()
+	next := NextPage(p)
 
 	if next == 0 {
 		return "#", nil
@@ -78,7 +70,7 @@ func (p *CountableResults) NextURL(t *uritemplates.UriTemplate) (string, error) 
 // PreviousURL returns URL to the previous set of results in a query response.
 func (p *CountableResults) PreviousURL(t *uritemplates.UriTemplate) (string, error) {
 
-	previous := p.PreviousPage()
+	previous := PreviousPage(p)
 
 	if previous == 0 {
 		return "#", nil
