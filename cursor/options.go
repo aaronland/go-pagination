@@ -47,12 +47,10 @@ func (opts *CursorOptions) Cursor(args ...string) string {
 }
 
 func (opts *CursorOptions) Page(args ...int64) int64 {
-
 	return 0
 }
 
 func (opts *CursorOptions) Spill(args ...int64) int64 {
-
 	return 0
 }
 

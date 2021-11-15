@@ -24,7 +24,7 @@ func (p *CursorResults) Method() pagination.Method {
 }
 
 func (p *CursorResults) Total() int64 {
-	return p.Total
+	return p.TotalCount
 }
 
 func (p *CursorResults) Next() interface{} {
@@ -94,7 +94,7 @@ func NewPaginationFromCursors(previous string, next string) (pagination.Results,
 	pg := new(CursorResults)
 	pg.CursorPrevious = previous
 	pg.CursorNext = next
-	pg.Total = -1
+	pg.TotalCount = -1
 
 	return pg, nil
 }

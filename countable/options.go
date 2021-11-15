@@ -52,7 +52,6 @@ func (opts *CountableOptions) Page(args ...int64) int64 {
 }
 
 func (opts *CountableOptions) Cursor(args ...string) string {
-
 	return ""
 }
 

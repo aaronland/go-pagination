@@ -25,9 +25,7 @@ type Options interface {
 	// Get or set the name of the column to use when paginating results
 	Column(...string) string
 	// Get or set the cursor token for the next set of query results
-	NextCursor(...string) string
-	// Get or set the cursor token for the previous set of query results
-	PreviousCursor(...string) string
+	Cursor(...string) string
 	// Return the Method type associated with Options
 	Method() Method
 }
