@@ -2,6 +2,7 @@ package pagination
 
 import (
 	"github.com/jtacoma/uritemplates"
+	"math"
 )
 
 // Method defines the type of pagination Options or Results.
@@ -19,13 +20,11 @@ type Options interface {
 	// Get or set the number of results to return in a Results
 	PerPage(...int64) int64
 	// Get or set current page to return query results for
-	Page(...int64) int64
-	// Get or set an optional number of extra query results to append to the result if less-than or equal to the total number of remaining results.
 	Spill(...int64) int64
 	// Get or set the name of the column to use when paginating results
 	Column(...string) string
-	// Get or set the cursor token for the next set of query results
-	Cursor(...string) string
+	// Get or set the pointer (page number or cursor) for the next set of query results
+	Pointer(...interface{}) interface{}
 	// Return the Method type associated with Options
 	Method() Method
 }
@@ -50,4 +49,18 @@ type Results interface {
 	PreviousURL(*uritemplates.UriTemplate) (string, error)
 	// Return the Method type associated with Results
 	Method() Method
+}
+
+// PagesForCount returns the number of pages that total_count will span using criteria defined in opts.
+func PagesForCount(opts Options, total_count int64) int64 {
+
+	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
+	spill := int64(math.Max(1.0, float64(opts.Spill())))
+
+	if spill >= per_page {
+		spill = per_page - 1
+	}
+
+	pages := int64(math.Ceil(float64(total_count) / float64(per_page)))
+	return pages
 }

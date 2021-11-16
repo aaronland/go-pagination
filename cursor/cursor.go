@@ -22,3 +22,12 @@ func PreviousCursor(r pagination.Results) string {
 
 	return r.Previous().(string)
 }
+
+func CursorFromOptions(opts pagination.Options) string {
+
+	if opts.Method() != pagination.Cursor {
+		return ""
+	}
+
+	return opts.Pointer().(string)
+}

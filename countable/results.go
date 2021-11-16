@@ -104,10 +104,12 @@ func NewResultsFromCount(total_count int64) (pagination.Results, error) {
 // NewResultsFromCount will return a new CountableResults instance for total_count using criteria defined in opts.
 func NewResultsFromCountWithOptions(opts pagination.Options, total_count int64) (pagination.Results, error) {
 
-	page := int64(math.Max(1.0, float64(opts.Page())))
+	page_num := PageFromOptions(opts)
+	
+	page := int64(math.Max(1.0, float64(page_num)))
 	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
 
-	pages := PagesForCount(opts, total_count)
+	pages := pagination.PagesForCount(opts, total_count)
 
 	next_page := int64(0)
 	previous_page := int64(0)

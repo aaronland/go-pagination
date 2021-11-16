@@ -42,17 +42,13 @@ func (opts *CountableOptions) PerPage(args ...int64) int64 {
 	return opts.perpage
 }
 
-func (opts *CountableOptions) Page(args ...int64) int64 {
+func (opts *CountableOptions) Pointer(args ...interface{}) interface{} {
 
 	if len(args) >= 1 {
-		opts.page = args[0]
+		opts.page = args[0].(int64)
 	}
 
 	return opts.page
-}
-
-func (opts *CountableOptions) Cursor(args ...string) string {
-	return ""
 }
 
 func (opts *CountableOptions) Spill(args ...int64) int64 {

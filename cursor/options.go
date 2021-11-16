@@ -28,19 +28,10 @@ func (opts *CursorOptions) Method() pagination.Method {
 	return pagination.Cursor
 }
 
-func (opts *CursorOptions) PerPage(args ...int64) int64 {
+func (opts *CursorOptions) Pointer(args ...interface{}) interface{} {
 
 	if len(args) >= 1 {
-		opts.perpage = args[0]
-	}
-
-	return opts.perpage
-}
-
-func (opts *CursorOptions) Cursor(args ...string) string {
-
-	if len(args) >= 1 {
-		opts.cursor = args[0]
+		opts.cursor = args[0].(string)
 	}
 
 	return opts.cursor

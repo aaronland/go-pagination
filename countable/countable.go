@@ -3,7 +3,6 @@ package countable
 
 import (
 	"github.com/aaronland/go-pagination"
-	"math"
 )
 
 func NextPage(r pagination.Results) int64 {
@@ -24,16 +23,11 @@ func PreviousPage(r pagination.Results) int64 {
 	return r.Previous().(int64)
 }
 
-// PagesForCount returns the number of pages that total_count will span using criteria defined in opts.
-func PagesForCount(opts pagination.Options, total_count int64) int64 {
+func PageFromOptions(opts pagination.Options) int64 {
 
-	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
-	spill := int64(math.Max(1.0, float64(opts.Spill())))
-
-	if spill >= per_page {
-		spill = per_page - 1
+	if opts.Method() != pagination.Countable {
+		return 0
 	}
 
-	pages := int64(math.Ceil(float64(total_count) / float64(per_page)))
-	return pages
+	return opts.Pointer().(int64)
 }
