@@ -37,6 +37,15 @@ func (opts *CursorOptions) Pointer(args ...interface{}) interface{} {
 	return opts.cursor
 }
 
+func (opts *CursorOptions) PerPage(args ...int64) int64 {
+
+	if len(args) >= 1 {
+		opts.perpage = args[0]
+	}
+
+	return opts.perpage
+}
+
 func (opts *CursorOptions) Page(args ...int64) int64 {
 	return 0
 }

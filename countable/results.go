@@ -105,7 +105,7 @@ func NewResultsFromCount(total_count int64) (pagination.Results, error) {
 func NewResultsFromCountWithOptions(opts pagination.Options, total_count int64) (pagination.Results, error) {
 
 	page_num := PageFromOptions(opts)
-	
+
 	page := int64(math.Max(1.0, float64(page_num)))
 	per_page := int64(math.Max(1.0, float64(opts.PerPage())))
 
