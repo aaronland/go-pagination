@@ -28,11 +28,21 @@ func (p *CursorResults) Total() int64 {
 }
 
 func (p *CursorResults) Next() interface{} {
-	return p.CursorNext
+
+	if p.CursorNext == "" {
+		return ""
+	}
+
+	return fmt.Sprintf("after-%s", p.CursorNext)
 }
 
 func (p *CursorResults) Previous() interface{} {
-	return p.CursorPrevious
+
+	if p.CursorPrevious == "" {
+		return ""
+	}
+
+	return fmt.Sprintf("before-%s", p.CursorPrevious)
 }
 
 func (p *CursorResults) PerPage() int64 {

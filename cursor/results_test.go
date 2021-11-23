@@ -9,7 +9,7 @@ import (
 func TestCursorPagination(t *testing.T) {
 
 	previous_cursor := ""
-	next_cursor := "next"
+	next_cursor := "12345"
 
 	pg, err := NewPaginationFromCursors(previous_cursor, next_cursor)
 
@@ -17,7 +17,7 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Failed to create cursor, %v", err)
 	}
 
-	if NextCursor(pg) != next_cursor {
+	if NextCursor(pg) != "after-12345" {
 		t.Fatalf("Invalid cursor")
 	}
 
@@ -37,7 +37,7 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Failed to derive next URL, %v", err)
 	}
 
-	expected_url := fmt.Sprintf("http://example.com?cursor=%s", next_cursor)
+	expected_url := fmt.Sprintf("http://example.com?cursor=after-%s", next_cursor)
 
 	if next_url != expected_url {
 		t.Fatalf("Unexpected URL")
