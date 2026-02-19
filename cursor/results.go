@@ -26,7 +26,7 @@ func (p *CursorResults) Total() int64 {
 	return p.TotalCount
 }
 
-func (p *CursorResults) Next() interface{} {
+func (p *CursorResults) Next() any {
 
 	if p.CursorNext == "" {
 		return ""
@@ -35,7 +35,7 @@ func (p *CursorResults) Next() interface{} {
 	return fmt.Sprintf("after-%s", p.CursorNext)
 }
 
-func (p *CursorResults) Previous() interface{} {
+func (p *CursorResults) Previous() any {
 
 	if p.CursorPrevious == "" {
 		return ""
@@ -64,7 +64,7 @@ func (p *CursorResults) NextURL(t *uritemplates.UriTemplate) (string, error) {
 		return "#", nil
 	}
 
-	values := map[string]interface{}{
+	values := map[string]any{
 		"next": cursor,
 	}
 
@@ -85,7 +85,7 @@ func (p *CursorResults) PreviousURL(t *uritemplates.UriTemplate) (string, error)
 		return "#", nil
 	}
 
-	values := map[string]interface{}{
+	values := map[string]any{
 		"previous": cursor,
 	}
 
@@ -105,6 +105,6 @@ func NewPaginationFromCursors(previous string, next string) (pagination.Results,
 	pg.CursorNext = next
 	pg.TotalCount = -1
 	pg.PageCount = -1
-	
+
 	return pg, nil
 }
