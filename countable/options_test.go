@@ -1,8 +1,9 @@
 package countable
 
 import (
-	"github.com/aaronland/go-pagination"
 	"testing"
+
+	"github.com/aaronland/go-pagination"
 )
 
 func TestCountableOptions(t *testing.T) {
