@@ -1,8 +1,9 @@
 package pagination
 
 import (
-	"github.com/jtacoma/uritemplates"
 	"math"
+
+	"github.com/jtacoma/uritemplates"
 )
 
 // Method defines the type of pagination Options or Results.

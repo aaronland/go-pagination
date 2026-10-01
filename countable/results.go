@@ -2,9 +2,10 @@ package countable
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/aaronland/go-pagination"
 	"github.com/jtacoma/uritemplates"
-	"math"
 )
 
 // type CountableResults implements the pagination.Results interface for page or number-based pagination.

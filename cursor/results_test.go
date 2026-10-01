@@ -2,8 +2,9 @@ package cursor
 
 import (
 	"fmt"
-	"github.com/jtacoma/uritemplates"
 	"testing"
+
+	"github.com/jtacoma/uritemplates"
 )
 
 func TestCursorPagination(t *testing.T) {
@@ -17,7 +18,7 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Failed to create cursor, %v", err)
 	}
 
-	if NextCursor(pg) != "after-12345" {
+	if NextCursor(pg) != "12345" {
 		t.Fatalf("Invalid cursor")
 	}
 
@@ -37,7 +38,7 @@ func TestCursorPagination(t *testing.T) {
 		t.Fatalf("Failed to derive next URL, %v", err)
 	}
 
-	expected_url := fmt.Sprintf("http://example.com?cursor=after-%s", next_cursor)
+	expected_url := fmt.Sprintf("http://example.com?cursor=%s", next_cursor)
 
 	if next_url != expected_url {
 		t.Fatalf("Unexpected URL")

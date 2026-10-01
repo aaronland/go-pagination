@@ -2,6 +2,7 @@ package cursor
 
 import (
 	"fmt"
+
 	"github.com/aaronland/go-pagination"
 	"github.com/jtacoma/uritemplates"
 )
@@ -28,20 +29,12 @@ func (p *CursorResults) Total() int64 {
 
 func (p *CursorResults) Next() any {
 
-	if p.CursorNext == "" {
-		return ""
-	}
-
-	return fmt.Sprintf("after-%s", p.CursorNext)
+	return p.CursorNext
 }
 
 func (p *CursorResults) Previous() any {
 
-	if p.CursorPrevious == "" {
-		return ""
-	}
-
-	return fmt.Sprintf("before-%s", p.CursorPrevious)
+	return p.CursorPrevious
 }
 
 func (p *CursorResults) PerPage() int64 {

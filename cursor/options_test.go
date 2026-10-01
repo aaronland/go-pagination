@@ -1,8 +1,9 @@
 package cursor
 
 import (
-	"github.com/aaronland/go-pagination"
 	"testing"
+
+	"github.com/aaronland/go-pagination"
 )
 
 func TestCursorOptions(t *testing.T) {
